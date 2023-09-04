@@ -1,7 +1,20 @@
-const express = require('express');
+import express from 'express';
+import dotenv from 'dotenv';
+import morgan from 'morgan';
+import connectDB from './config/db.js';
+
+//configure env
+dotenv.config();
+
+//database config
+connectDB();
 
 //rest object
 const app = express();
+
+//middleware
+app.use(express.json());
+app.use(morgan('dev'));
 
 //rest api
 app.get('/', (req, res) => {
@@ -11,7 +24,7 @@ app.get('/', (req, res) => {
 })
 
 //PORT
-const PORT = 8080;
+const PORT = process.env.PORT || 8080;
 
 //run listen
 app.listen(PORT, () => {
